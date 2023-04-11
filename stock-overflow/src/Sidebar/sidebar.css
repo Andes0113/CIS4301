@@ -1,0 +1,29 @@
+#sidebar {
+  flex: 1;
+  height: 100%;
+  color: red;
+  border: 1px solid red;
+}
+
+#search-entry {
+  height: 2em;
+  width: 98%;
+  border: 1px solid black;
+  font-size: 1.5em;
+}
+
+#search-button {
+  width: 100%;
+  height: 2em;
+}
+
+.search-result {
+  width: 100%;
+  height: 20px;
+  border: 1px dashed gray;
+  background-color: white;
+}
+
+.search-result:hover {
+  background-color: lightblue;
+}

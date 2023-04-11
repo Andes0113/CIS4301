@@ -1,0 +1,13 @@
+.chart-container {
+  flex: 4;
+  height: 500px;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+#chart-company-header {
+  font-size: 1.5em;
+  width: 100%;
+  text-align: center;
+}
