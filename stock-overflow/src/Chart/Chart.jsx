@@ -13,45 +13,45 @@ import './Chart.css';
 
 const pHolder = [
   {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
+    day: 0,
+    AAPL: 4000,
+    MSFT: 2400,
     amt: 2400,
   },
   {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
+    day: 1,
+    AAPL: 3000,
+    MSFT: 1398,
     amt: 2210,
   },
   {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
+    day: 2,
+    AAPL: 2000,
+    MSFT: 9800,
     amt: 2290,
   },
   {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
+    day: 3,
+    AAPL: 2780,
+    MSFT: 3908,
     amt: 2000,
   },
   {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
+    day: 4,
+    AAPL: 1890,
+    MSFT: 4800,
     amt: 2181,
   },
   {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
+    day: 5,
+    AAPL: 2390,
+    MSFT: 3800,
     amt: 2500,
   },
   {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
+    day: 6,
+    AAPL: 3490,
+    MSFT: 4300,
     amt: 2100,
   },
 ];
@@ -60,11 +60,16 @@ function Chart({ company }) {
   const [data, setData] = useState(pHolder);
 
   useEffect(() => {
-    console.log(company.ticker);
+    setData(
+      pHolder.map((instance) => ({
+        day: instance.day,
+        [company.ticker]: instance[company.ticker],
+      }))
+    );
   }, [company]);
 
   return (
-    <div className="chart-container">
+    <>
       <div id="chart-company-header">{`${company.name} (${company.ticker})`}</div>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
@@ -79,20 +84,20 @@ function Chart({ company }) {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="day" />
           <YAxis />
           <Tooltip />
           <Legend />
           <Line
             type="monotone"
-            dataKey="pv"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
+            dataKey={company.ticker}
+            stroke="#960000"
+            activeDot={{ r: 6 }}
           />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          {/* <Line type="monotone" dataKey="price" stroke="#82ca9d" /> */}
         </LineChart>
       </ResponsiveContainer>
-    </div>
+    </>
   );
 }
 

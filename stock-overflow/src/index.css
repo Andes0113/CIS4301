@@ -19,3 +19,11 @@
   width: 100%;
   height: 100%;
 }
+
+.maincontent-container {
+  flex: 4;
+  height: 500px;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+}

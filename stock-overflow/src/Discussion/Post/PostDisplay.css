@@ -1,0 +1,15 @@
+.post-container {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  padding-left: 2%;
+  margin: 1%;
+}
+
+.post-user {
+  font-size: 1.25em;
+}
+
+.post-content-container {
+  margin-left: 1%;
+  margin-right: 3%;
+}
