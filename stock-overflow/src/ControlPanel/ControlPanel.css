@@ -1,0 +1,13 @@
+#control-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.control-option {
+  padding: 5%;
+  border: 1px solid gray;
+}
+
+label {
+  margin-right: 5%;
+}
