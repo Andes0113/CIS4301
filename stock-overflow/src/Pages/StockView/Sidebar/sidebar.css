@@ -1,8 +1,6 @@
 #sidebar {
   flex: 1;
-  height: 100%;
-  color: red;
-  border: 1px solid red;
+  min-width: 150px;
 }
 
 #search-entry {
@@ -17,9 +15,14 @@
   height: 2em;
 }
 
+#search-results {
+  max-height: 30em;
+  overflow-y: scroll;
+}
+
 .search-result {
   width: 100%;
-  height: 20px;
+  height: 2em;
   border: 1px dashed gray;
   background-color: white;
 }

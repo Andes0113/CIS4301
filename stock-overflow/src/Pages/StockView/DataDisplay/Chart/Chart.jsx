@@ -8,7 +8,6 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import './Chart.css';
 
 const colors = ['#3498DB', '#B03A2E', '#28B463', '#28B463', '#F1C40F'];
 
@@ -16,8 +15,6 @@ function Chart({ data, selected }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
-        width={500}
-        height={300}
         data={data}
         margin={{
           top: 5,

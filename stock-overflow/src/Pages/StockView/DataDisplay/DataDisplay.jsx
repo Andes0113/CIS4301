@@ -1,5 +1,6 @@
 import Chart from './Chart/Chart';
 import useStockData from '../../../hooks/useStockData';
+import './DataDisplay.css';
 
 function DataDisplay({ selected }) {
   const { data, loading } = useStockData({

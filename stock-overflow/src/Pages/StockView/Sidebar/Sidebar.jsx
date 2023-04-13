@@ -1,21 +1,15 @@
-import { useState } from 'react';
-import './sidebar.css';
+import { useEffect, useState } from 'react';
+import './Sidebar.css';
 import { useSettingsContext } from '../../../SettingsContext';
+import useCompanies from '../../../hooks/useCompanies';
 
 export default function Sidebar({ setSelected }) {
   const { multiSelect } = useSettingsContext();
-  const [companies, setCompanies] = useState([
-    {
-      name: 'Apple',
-      ticker: 'AAPL',
-    },
-    {
-      name: 'Microsoft',
-      ticker: 'MSFT',
-    },
-  ]);
-  const [query, setQuery] = useState([...companies]);
   const [input, setInput] = useState('');
+  const { companies, loading } = useCompanies();
+  const [query, setQuery] = useState(companies);
+
+  useEffect(() => setQuery(companies), [loading]);
 
   const selectCompany = (company) => {
     // Update selected company
@@ -43,7 +37,6 @@ export default function Sidebar({ setSelected }) {
         );
       })
     );
-    console.log(input);
   };
 
   return (
@@ -58,15 +51,17 @@ export default function Sidebar({ setSelected }) {
       <button id="search-button" onClick={findStocks}>
         Search
       </button>
-      {query.map((company) => (
-        <button
-          onClick={() => selectCompany(company)}
-          className="search-result"
-          key={company.ticker}
-        >
-          {`${company.name} (${company.ticker})`}
-        </button>
-      ))}
+      <div id="search-results">
+        {query.map((company) => (
+          <button
+            onClick={() => selectCompany(company)}
+            className="search-result"
+            key={company.ticker}
+          >
+            {`${company.name} (${company.ticker})`}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

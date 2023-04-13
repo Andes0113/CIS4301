@@ -9,14 +9,17 @@ function Discussion({ selected }) {
   const { posts, loading } = usePosts({ ticker: selected.ticker });
 
   return (
-    <div id="comments-container">
-      {!loading &&
-        posts.map((post) => (
-          <Fragment key={post.id}>
-            <PostDisplay post={post} />
-          </Fragment>
-        ))}
-    </div>
+    <>
+      <h1>Discussion</h1>
+      <div id="comments-container">
+        {!loading &&
+          posts.map((post) => (
+            <Fragment key={post.id}>
+              <PostDisplay post={post} />
+            </Fragment>
+          ))}
+      </div>
+    </>
   );
 }
 

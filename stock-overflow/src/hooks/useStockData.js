@@ -59,7 +59,7 @@ const useStockData = ({ tickers }) => {
   useEffect(() => {
     setData(pHolder);
     setLoading(false);
-  }, [tickers]);
+  }, [tickers, dataType, indvar, multiSelectType]);
 
   return { data, loading };
 };
