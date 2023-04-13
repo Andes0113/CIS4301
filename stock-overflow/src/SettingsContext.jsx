@@ -7,6 +7,7 @@ const SettingsContext = createContext();
 export function SettingsContextProvider(props) {
   const { children } = props;
   const [multiSelect, setMultiSelect] = useState(false);
+  const [multiSelectType, setMultiSelectType] = useState('standard');
   const [indvar, setIndVar] = useState('price');
   const [dataType, setDataType] = useState('plain');
 
@@ -15,6 +16,8 @@ export function SettingsContextProvider(props) {
       value={{
         multiSelect,
         setMultiSelect,
+        multiSelectType,
+        setMultiSelectType,
         indvar,
         setIndVar,
         dataType,

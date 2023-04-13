@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './sidebar.css';
-import { useSettingsContext } from '../SettingsContext';
+import { useSettingsContext } from '../../../SettingsContext';
 
 export default function Sidebar({ setSelected }) {
   const { multiSelect } = useSettingsContext();

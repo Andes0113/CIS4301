@@ -3,9 +3,9 @@ import Sidebar from './Sidebar/Sidebar';
 import Discussion from './Discussion/Discussion';
 import DataDisplay from './DataDisplay/DataDisplay';
 import ControlPanel from './ControlPanel/ControlPanel';
-import { SettingsContextProvider } from './SettingsContext';
+import { SettingsContextProvider } from '../../SettingsContext';
 
-function App() {
+function StockView() {
   const [selected, setSelected] = useState([
     {
       name: 'Apple',
@@ -16,7 +16,7 @@ function App() {
   return (
     <div className="App">
       <div id="header">Stock Overflow</div>
-      <div className="page-container">
+      <div className="stockview-container">
         <SettingsContextProvider>
           <Sidebar setSelected={setSelected} />
           <div className="maincontent-container">
@@ -30,4 +30,4 @@ function App() {
   );
 }
 
-export default App;
+export default StockView;

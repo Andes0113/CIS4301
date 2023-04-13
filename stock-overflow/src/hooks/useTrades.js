@@ -1,8 +1,6 @@
-import { Fragment, useState } from 'react';
-import './Discussion.css';
-import PostDisplay from './Post/PostDisplay';
+import { useEffect, useState } from 'react';
 
-const discPHolder = [
+const pHolder = [
   {
     id: 1,
     user: 'Alex',
@@ -33,17 +31,19 @@ const discPHolder = [
   },
 ];
 
-function Discussion({ company }) {
-  const [posts, setPosts] = useState(discPHolder);
-  return (
-    <div id="comments-container">
-      {posts.map((post) => (
-        <Fragment key={post.id}>
-          <PostDisplay post={post} />
-        </Fragment>
-      ))}
-    </div>
-  );
-}
+const useTrades = ({ username, ticker }) => {
+  const [trades, setTrades] = useState([]);
+  const [loading, setLoading] = useState(true);
+  let body = {};
+  if (username) body.username = username;
+  if (ticker) body.ticker = ticker;
 
-export default Discussion;
+  useEffect(() => {
+    setTrades(pHolder);
+    setLoading(false);
+  }, [username, ticker]);
+
+  return { trades, loading };
+};
+
+export default useTrades;
