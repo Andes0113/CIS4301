@@ -1,13 +1,12 @@
 import { useParams, Link, Outlet } from 'react-router-dom';
 import './UserPage.css';
+import Header from '../header';
 
 function UserPage() {
   let { username } = useParams();
   return (
     <div id="UserPage">
-      <Link to="/" id="header">
-        Stock Overflow
-      </Link>
+      <Header />
       <h1>{username}</h1>
       <nav id="user-nav">
         <Link className="user-nav-link" to="/">

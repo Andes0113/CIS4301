@@ -7,12 +7,15 @@ import {
   Route,
   Link,
   createRoutesFromElements,
+  redirect,
 } from 'react-router-dom';
 import './index.css';
 import UserPage from './Pages/UserPage/UserPage';
 import Posts from './Pages/UserPage/Components/Posts';
 import Trades from './Pages/UserPage/Components/Trades';
 import IndexFunds from './Pages/UserPage/Components/IndexFunds';
+import { AuthContextProvider } from './Contexts/AuthContext';
+import LoginPage from './Pages/LoginPage/LoginPage';
 
 const router = createBrowserRouter([
   {
@@ -37,8 +40,14 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <AuthContextProvider>
+    <RouterProvider router={router} />
+  </AuthContextProvider>
 );

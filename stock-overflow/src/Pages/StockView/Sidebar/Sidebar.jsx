@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Sidebar.css';
-import { useSettingsContext } from '../../../SettingsContext';
+import { useSettingsContext } from '../../../Contexts/SettingsContext';
 import useCompanies from '../../../hooks/useCompanies';
 
 export default function Sidebar({ setSelected }) {

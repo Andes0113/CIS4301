@@ -3,7 +3,8 @@ import Sidebar from './Sidebar/Sidebar';
 import Discussion from './Discussion/Discussion';
 import DataDisplay from './DataDisplay/DataDisplay';
 import ControlPanel from './ControlPanel/ControlPanel';
-import { SettingsContextProvider } from '../../SettingsContext';
+import { SettingsContextProvider } from '../../Contexts/SettingsContext';
+import Header from '../header';
 
 function StockView() {
   const [selected, setSelected] = useState([
@@ -15,7 +16,7 @@ function StockView() {
 
   return (
     <div className="App">
-      <div id="header">Stock Overflow</div>
+      <Header />
       <div className="stockview-container">
         <SettingsContextProvider>
           <Sidebar setSelected={setSelected} />

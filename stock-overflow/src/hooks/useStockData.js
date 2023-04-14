@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSettingsContext } from '../SettingsContext';
+import { useSettingsContext } from '../Contexts/SettingsContext';
 
 const pHolder = [
   {

@@ -1,5 +1,5 @@
 import './ControlPanel.css';
-import { useSettingsContext } from '../../../SettingsContext';
+import { useSettingsContext } from '../../../Contexts/SettingsContext';
 import { useState } from 'react';
 
 function ControlPanel() {

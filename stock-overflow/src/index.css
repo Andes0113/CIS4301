@@ -5,16 +5,34 @@
 
 #header {
   min-height: 50px;
-  font-size: 2rem;
-  text-align: center;
   border-bottom: 1px solid black;
   text-decoration: none;
-  color: black;
-  cursor: pointer;
   margin-bottom: 1%;
+  display: flex;
+  justify-content: space-between;
 }
 
-#header:hover {
+#logo {
+  color: black;
+  cursor: pointer;
+  font-size: 2rem;
+  text-decoration: none;
+}
+
+#logo:hover {
+  color: #54b3d6;
+}
+
+#header-login {
+  color: black;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  background-color: transparent;
+  border: 0;
+  padding: 0.25rem;
+}
+#header-login:hover {
   color: #54b3d6;
 }
 

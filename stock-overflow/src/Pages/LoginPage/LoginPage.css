@@ -1,0 +1,16 @@
+#LoginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20%;
+  padding-top: 10%;
+}
+
+.login-input {
+  margin-top: 1%;
+}
+
+#password-input {
+  margin-bottom: 10%;
+}
