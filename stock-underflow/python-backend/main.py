@@ -31,3 +31,32 @@ def get_stock_data(ticker: str, start_date: str, end_date: str, indvar: str, dat
     if multiSelectType != 'None':
         return {"data": OracleClient.getTwoStockData(ticker, ticker2, start_date, end_date, indvar, dataType, multiSelectType )}
     return { "data": OracleClient.getStockData(ticker, start_date, end_date, indvar, dataType)}
+
+@app.get("/volume_of_posts")
+def get_volume_of_posts(ticker: str, start_date: str, end_date: str):
+    return {"data": OracleClient.get_daily_volume_of_posts(ticker, start_date, end_date)}
+
+@app.get("/posts")
+def get_posts(ticker: str, username: str):
+    if username != 'null':
+        return {"data": OracleClient.getPostsByUsername(username)}
+    else:  
+        return {"data": OracleClient.getPostsByTicker(ticker)}
+    
+@app.get("/trades")
+def get_trade_ticker(ticker: str, username: str):
+    if username != 'null':
+        return {"data": OracleClient.getPaperTradesByUsername(username)}
+    return {"data": OracleClient.getPaperTradesByTicker(ticker)}
+
+@app.get("/funds/user")
+def get_user_funds(username: str):
+    return {"data": OracleClient.getIndexFundsByUsername(username) }
+
+@app.get("/fund-stocks")
+def get_fund_stocks(id: str):
+    return {"data": OracleClient.getIndexFundStocks(id) }
+
+@app.get("/fund-data")
+def get_fund_data(id: str, start_date: str, end_date: str):
+    return {"data": OracleClient.getIndexFundStockData(id, start_date, end_date) }

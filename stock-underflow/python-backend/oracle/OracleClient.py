@@ -7,7 +7,8 @@ connection = oracledb.connect(
     user="af.rowe",
     password=pw,
     dsn="oracle.cise.ufl.edu/orcl",
-    port=1521,)
+    port=1521,
+    )
 
 print("Successfully connected to Oracle Database")
 
@@ -117,7 +118,190 @@ def getTwoStockData(ticker1, ticker2, start_date, end_date, indvar, dataType, mu
                 "date": row[2].date(),
             })
     return data
+def get_daily_volume_of_posts(ticker: str, start_date: str, end_date: str):
+    cursor = connection.cursor()
+    query = """
+        SELECT COUNT(*), "DATE"
+        FROM
+        (
+            select ticker,
+            TRUNC(CAST("TIMESTAMP" AS DATE)) as "DATE"
+            from Posts
+            where ticker = '{0}' 
+        )
+        GROUP BY "DATE"
+        HAVING "DATE" between '{1}' AND '{2}'
+        ORDER BY "DATE"
+    """.format(ticker, start_date, end_date)
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "date": row[1].date(),
+            "volume": row[0],
+        })
+    return data
 
+def getPostsByUsername(username, limit = 100):
+    limit = 100
+    cursor = connection.cursor()
+    query = """
+        SELECT PostID, Ticker, TIMESTAMP, Username, Title, Content FROM Posts
+        WHERE Username = '{0}' and rownum between 0 and {1}
+        ORDER BY "TIMESTAMP" desc
+    """.format(username, limit)
 
-# getStocks()
-# getStockData('AAPL', '17-JAN-2019', '30-JAN-2019')
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "ticker": row[1],
+            "timestamp": row[2].date(),
+            "username": row[3],
+            "title": row[4],
+            "Content": row[5],
+        })
+    return data
+
+def getPostsByTicker(ticker, limit = 100):
+    limit = 100
+    cursor = connection.cursor()
+    query = """
+        SELECT PostID, Ticker, TIMESTAMP, Username, Title, Content FROM Posts
+        WHERE Ticker = '{0}' and rownum between 0 and {1}
+        ORDER BY "TIMESTAMP" desc
+    """.format(ticker, limit)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "ticker": row[1],
+            "timestamp": row[2].date(),
+            "username": row[3],
+            "title": row[4],
+            "Content": row[5],
+        })
+    return data
+
+def getPaperTradesByTicker(ticker):
+    cursor = connection.cursor()
+    query = """
+        select TradeID, PURCHASEDATE, SELLDATE, USERNAME, TICKER,
+        TRUNC(("SellPrice" - "PurchasePrice")/"PurchasePrice" * 100, 2) as Percent_Profit from
+        (
+            select TradeID, SELLDATE, PURCHASEDATE, USERNAME, P.Ticker, "Open" as "PurchasePrice" from
+            (select * from PaperTrades where Ticker='{0}') P
+            join
+            (select * from StockInstances where Ticker='{0}') S
+            on TRUNC(P.PURCHASEDATE) = TRUNC(S."Date")
+        ) A
+        join 
+        (select "Date", "Open" as "SellPrice" from StockInstances where Ticker='{0}') B
+        on TRUNC(A.SELLDATE) = TRUNC(B."Date")
+        ORDER BY PERCENT_PROFIT desc
+    """.format(ticker)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "trade_id": row[0],
+            "sell_date": row[1].date(),
+            "purchase_date": row[2].date(),
+            "username": row[3],
+            "ticker": row[4],
+            "percent_profit": row[5],
+        })
+    return data
+def getPaperTradesByUsername(username):
+    cursor = connection.cursor()
+    query = """
+        select TradeID, PURCHASEDATE, SELLDATE, USERNAME, A.TICKER,
+        TRUNC(("SellPrice" - "PurchasePrice")/"PurchasePrice" * 100, 2) as Percent_Profit from
+        (
+            select TradeID, SELLDATE, PURCHASEDATE, USERNAME, P.Ticker, "Open" as "PurchasePrice" from
+            (select * from PaperTrades where username='{0}') P
+            join
+            (select * from StockInstances) S
+            on TRUNC(P.PURCHASEDATE) = TRUNC(S."Date") and P.Ticker = S.Ticker
+        ) A
+        join 
+        (select "Date", "Open" as "SellPrice", TICKER from StockInstances) B
+        on TRUNC(A.SELLDATE) = TRUNC(B."Date") and A.Ticker = B.Ticker
+        ORDER BY PERCENT_PROFIT desc
+    """.format(username)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "trade_id": row[0],
+            "sell_date": row[1].date(),
+            "purchase_date": row[2].date(),
+            "username": row[3],
+            "ticker": row[4],
+            "percent_profit": row[5]
+        })
+    return data
+def getIndexFundsByUsername(username):
+    cursor = connection.cursor()
+    query = """
+        select * from IndexFunds
+        where Username='{0}'
+    """.format(username)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "fund_id": row[0],
+            "name": row[1],
+            "username": row[2],
+        })
+    return data
+def getIndexFundStocks(fundID):
+    cursor = connection.cursor()
+    query = """
+        select X.TICKER, COMPANYNAME from
+        (
+            select A.FUNDID, Name, Ticker from
+            (select * from IndexFunds where FUNDID='{0}') A
+            join
+            (select * from IndexFundStocks) B
+            on A.FUNDID = B.FUNDID
+        ) X
+        join Stocks on X.Ticker = Stocks.Ticker
+    """.format(fundID)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "ticker": row[0],
+            "name": row[1],
+        })
+    return data
+def getIndexFundStockData(fundID, start_date, end_date):
+    cursor = connection.cursor()
+    query = """
+        select NAME,sum("Open") as "Price", "Date" from
+        (
+            select A.FUNDID, NAME, Ticker, Username from
+            (select * from IndexFunds where FUNDID='{0}') A
+            join
+            (select * from IndexFundStocks) B
+            on A.FUNDID = B.FUNDID
+        ) X
+        join
+        (
+            select "Open", "Date", Ticker from StockInstances
+            where "Date" between '{1}' and '{2}'
+        ) Y
+        on X.TICKER = Y.TICKER
+        group by NAME, "Date"
+        ORDER BY "Date"
+    """.format(fundID, start_date, end_date)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            f"{row[0]}": row[1],
+            "Date": row[2].date(),
+        })
+    return data
