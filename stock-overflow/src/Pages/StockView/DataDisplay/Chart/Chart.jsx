@@ -24,8 +24,8 @@ function Chart({ data, selected }) {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="day" />
-        <YAxis />
+        <XAxis dataKey="date" />
+        <YAxis domain={['auto', 'auto']} />
         <Tooltip />
         <Legend />
         {selected.map((c, idx) => {
@@ -35,7 +35,7 @@ function Chart({ data, selected }) {
               type="monotone"
               dataKey={c.ticker}
               stroke={colors[idx]}
-              activeDot={{ r: 6 }}
+              dot={false}
             />
           );
         })}

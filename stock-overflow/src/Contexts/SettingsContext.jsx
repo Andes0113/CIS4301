@@ -8,9 +8,12 @@ export function SettingsContextProvider(props) {
   const { children } = props;
   const [multiSelect, setMultiSelect] = useState(false);
   const [multiSelectType, setMultiSelectType] = useState('standard');
-  const [indvar, setIndVar] = useState('price');
+  const [indvar, setIndVar] = useState('Price');
   const [dataType, setDataType] = useState('plain');
+  const [startDate, setStartDate] = useState('2022-01-01');
+  const [endDate, setEndDate] = useState('2023-01-01');
 
+  console.log(endDate);
   return (
     <SettingsContext.Provider
       value={{
@@ -22,6 +25,10 @@ export function SettingsContextProvider(props) {
         setIndVar,
         dataType,
         setDataType,
+        startDate,
+        setStartDate,
+        endDate,
+        setEndDate,
       }}
     >
       {children}

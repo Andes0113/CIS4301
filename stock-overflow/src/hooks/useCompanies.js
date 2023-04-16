@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const pHolder = [
   {
@@ -17,8 +18,10 @@ const useCompanies = () => {
   let body = {};
 
   useEffect(() => {
-    setCompanies(pHolder);
-    setLoading(false);
+    axios.get('http://localhost:8000/companies').then(res => {
+      setCompanies(res.data.data)
+      setLoading(false);
+  });
   }, []);
 
   return { companies, loading };

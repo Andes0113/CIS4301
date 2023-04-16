@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSettingsContext } from '../Contexts/SettingsContext';
+import axios from 'axios';
 
 const pHolder = [
   {
@@ -46,20 +47,52 @@ const pHolder = [
   },
 ];
 
-const useStockData = ({ tickers }) => {
+const formatDate = (unformatted_date) => {
+  let date = new Date(unformatted_date);
+  date = date.toLocaleString('default', {
+    timeZone: 'UTC',
+    day: '2-digit',
+    month: 'short',
+    year: '2-digit',
+  });
+  date = date.split(' ');
+  date[1] = date[1].substr(0, date[1].length - 1);
+  let temp = date[1];
+  date[1] = date[0];
+  date[0] = temp;
+  date[1] = date[1].toUpperCase();
+  date = date.join('-');
+  return date;
+};
+
+const useStockData = ({ ticker }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { dataType, indvar, multiSelect, multiSelectType } =
+  const { dataType, indvar, multiSelect, multiSelectType, startDate, endDate } =
     useSettingsContext();
   let body = { dataType, indvar };
-  if (tickers) body.tickers = tickers;
+  // if (tickers) body.tickers = tickers;
   if (multiSelect) body.multiSelectType = multiSelectType;
-  console.log(body);
 
   useEffect(() => {
-    setData(pHolder);
+    // console.log(tickers);
+    let start_date = formatDate(startDate);
+    let end_date = formatDate(endDate);
+    axios
+      .get('http://localhost:8000/stock_data', {
+        params: {
+          ticker,
+          start_date,
+          end_date,
+          indvar,
+        },
+      })
+      .then((res) => {
+        setData(res.data.data);
+      });
+    // setData(pHolder);
     setLoading(false);
-  }, [tickers, dataType, indvar, multiSelectType]);
+  }, [ticker, dataType, indvar, multiSelectType, startDate, endDate]);
 
   return { data, loading };
 };

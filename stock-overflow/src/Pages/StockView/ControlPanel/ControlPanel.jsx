@@ -13,6 +13,10 @@ function ControlPanel() {
     setDataType,
     multiSelectType,
     setMultiSelectType,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
   } = settings;
   return (
     <div id="control-panel">
@@ -47,8 +51,8 @@ function ControlPanel() {
           value={indvar}
           onChange={(e) => setIndVar(e.target.value)}
         >
-          <option value="price">Price</option>
-          <option value="volume">Volume</option>
+          <option value="Price">Price</option>
+          <option value="Volume">Volume</option>
         </select>
       </div>
       <div className="control-option">
@@ -63,6 +67,24 @@ function ControlPanel() {
           <option value="difference">Diff</option>
           <option value="percent_difference">% Diff</option>
         </select>
+      </div>
+      <div className="control-option">
+        <label htmlFor="start-date-input">Start Date</label>
+        <input
+          id="start-date-input"
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+      </div>
+      <div className="control-option">
+        <label htmlFor="end-date-input">End Date</label>
+        <input
+          id="end-date-input"
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+        />
       </div>
     </div>
   );

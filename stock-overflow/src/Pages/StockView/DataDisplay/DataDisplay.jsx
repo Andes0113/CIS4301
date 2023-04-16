@@ -3,8 +3,8 @@ import useStockData from '../../../hooks/useStockData';
 import './DataDisplay.css';
 
 function DataDisplay({ selected }) {
-  const { data, loading } = useStockData({
-    tickers: selected.map((company) => company.ticker),
+  let { data, loading } = useStockData({
+    ticker: selected[0].ticker,
   });
 
   const headerString = selected
