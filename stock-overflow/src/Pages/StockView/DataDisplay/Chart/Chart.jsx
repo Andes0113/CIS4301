@@ -8,10 +8,12 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { useSettingsContext } from '../../../../Contexts/SettingsContext';
 
 const colors = ['#3498DB', '#B03A2E', '#28B463', '#28B463', '#F1C40F'];
 
 function Chart({ data, selected }) {
+  const { multiSelectType } = useSettingsContext();
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
@@ -28,17 +30,26 @@ function Chart({ data, selected }) {
         <YAxis domain={['auto', 'auto']} />
         <Tooltip />
         <Legend />
-        {selected.map((c, idx) => {
-          return (
-            <Line
-              key={idx}
-              type="monotone"
-              dataKey={c.ticker}
-              stroke={colors[idx]}
-              dot={false}
-            />
-          );
-        })}
+        {multiSelectType === 'difference' ? (
+          <Line
+            type="monotone"
+            dataKey={'diff'}
+            stroke={colors[0]}
+            dot={false}
+          />
+        ) : (
+          selected.map((c, idx) => {
+            return (
+              <Line
+                key={idx}
+                type="monotone"
+                dataKey={c.ticker}
+                stroke={colors[idx]}
+                dot={false}
+              />
+            );
+          })
+        )}
         {/* <Line type="monotone" dataKey="price" stroke="#82ca9d" /> */}
       </LineChart>
     </ResponsiveContainer>

@@ -16,7 +16,8 @@ export default function Sidebar({ setSelected }) {
     if (multiSelect) {
       setSelected((prev) => {
         if (prev.filter((c) => c.ticker === company.ticker).length === 0) {
-          return [...prev, company];
+          if (prev.length < 2) return [...prev, company];
+          else return [prev[1], company];
         } else if (prev.length > 1) {
           return prev.filter((c) => c.ticker !== company.ticker);
         }
