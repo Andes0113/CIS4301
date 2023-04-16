@@ -118,19 +118,21 @@ def getTwoStockData(ticker1, ticker2, start_date, end_date, indvar, dataType, mu
                 "date": row[2].date(),
             })
     return data
-def get_daily_volume_of_posts(ticker: str):
+def get_daily_volume_of_posts(ticker: str, start_date: str, end_date: str):
     cursor = connection.cursor()
     query = """
         SELECT COUNT(*), "DATE"
         FROM
         (
             select ticker,
-            CAST("TIMESTAMP" AS DATE) as "DATE"
+            TRUNC(CAST("TIMESTAMP" AS DATE)) as "DATE"
             from Posts
-            where ticker = '{}'
+            where ticker = '{0}' 
         )
         GROUP BY "DATE"
-    """.format(ticker)
+        HAVING "DATE" between '{1}' AND '{2}'
+        ORDER BY "DATE"
+    """.format(ticker, start_date, end_date)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -180,14 +182,24 @@ def getPostsByTicker(ticker, limit = 100):
             "Content": row[5],
         })
     return data
-def getPaperTradesByTicker(ticker, limit=100):
+
+def getPaperTradesByTicker(ticker):
     cursor = connection.cursor()
     query = """
-        SELECT TradeID, SellDate, PurchaseDate, Username, Ticker
-        FROM PaperTrades
-        WHERE Ticker = '{0}' and rownum <= {1}
-        ORDER BY "PurchaseDate" desc
-    """.format(ticker, limit)
+        select TradeID, PURCHASEDATE, SELLDATE, USERNAME, TICKER,
+        TRUNC(("SellPrice" - "PurchasePrice")/"PurchasePrice" * 100, 2) as Percent_Profit from
+        (
+            select TradeID, SELLDATE, PURCHASEDATE, USERNAME, P.Ticker, "Open" as "PurchasePrice" from
+            (select * from PaperTrades where Ticker='{0}') P
+            join
+            (select * from StockInstances where Ticker='{0}') S
+            on TRUNC(P.PURCHASEDATE) = TRUNC(S."Date")
+        ) A
+        join 
+        (select "Date", "Open" as "SellPrice" from StockInstances where Ticker='{0}') B
+        on TRUNC(A.SELLDATE) = TRUNC(B."Date")
+        ORDER BY PERCENT_PROFIT desc
+    """.format(ticker)
 
     data = []
     for row in cursor.execute(query):
@@ -197,16 +209,26 @@ def getPaperTradesByTicker(ticker, limit=100):
             "purchase_date": row[2].date(),
             "username": row[3],
             "ticker": row[4],
+            "percent_profit": row[5],
         })
     return data
-def getPaperTradesByUsername(username, limit=100):
+def getPaperTradesByUsername(username):
     cursor = connection.cursor()
     query = """
-        SELECT TradeID, SellDate, PurchaseDate, Username, Ticker
-        FROM PaperTrades
-        WHERE Username = '{0}' and rownum <= {1}
-        ORDER BY "PurchaseDate" desc
-    """.format(username, limit)
+        select TradeID, PURCHASEDATE, SELLDATE, USERNAME, A.TICKER,
+        TRUNC(("SellPrice" - "PurchasePrice")/"PurchasePrice" * 100, 2) as Percent_Profit from
+        (
+            select TradeID, SELLDATE, PURCHASEDATE, USERNAME, P.Ticker, "Open" as "PurchasePrice" from
+            (select * from PaperTrades where username='{0}') P
+            join
+            (select * from StockInstances) S
+            on TRUNC(P.PURCHASEDATE) = TRUNC(S."Date") and P.Ticker = S.Ticker
+        ) A
+        join 
+        (select "Date", "Open" as "SellPrice", TICKER from StockInstances) B
+        on TRUNC(A.SELLDATE) = TRUNC(B."Date") and A.Ticker = B.Ticker
+        ORDER BY PERCENT_PROFIT desc
+    """.format(username)
 
     data = []
     for row in cursor.execute(query):
@@ -216,16 +238,15 @@ def getPaperTradesByUsername(username, limit=100):
             "purchase_date": row[2].date(),
             "username": row[3],
             "ticker": row[4],
+            "percent_profit": row[5]
         })
     return data
-def getIndexFundsByUsername(username, limit=100):
+def getIndexFundsByUsername(username):
     cursor = connection.cursor()
     query = """
-        SELECT FundID, Name, Username
-        FROM IndexFunds
-        WHERE Username = '{0}' and rownum <= {1}
-        ORDER BY "Name" asc
-    """.format(username, limit)
+        select * from IndexFunds
+        where Username='{0}'
+    """.format(username)
 
     data = []
     for row in cursor.execute(query):
@@ -235,23 +256,52 @@ def getIndexFundsByUsername(username, limit=100):
             "username": row[2],
         })
     return data
-def getIndexFundsByTicker(ticker, limit=100):
+def getIndexFundStocks(fundID):
     cursor = connection.cursor()
     query = """
-        SELECT FundID, Name, Username
-        FROM IndexFunds
-        WHERE Ticker = '{0}' and rownum <= {1}
-        ORDER BY "Name" asc
-    """.format(ticker, limit)
+        select X.TICKER, COMPANYNAME from
+        (
+            select A.FUNDID, Name, Ticker from
+            (select * from IndexFunds where FUNDID='{0}') A
+            join
+            (select * from IndexFundStocks) B
+            on A.FUNDID = B.FUNDID
+        ) X
+        join Stocks on X.Ticker = Stocks.Ticker
+    """.format(fundID)
 
     data = []
     for row in cursor.execute(query):
         data.append({
-            "fund_id": row[0],
+            "ticker": row[0],
             "name": row[1],
-            "username": row[2],
         })
     return data
+def getIndexFundStockData(fundID, start_date, end_date):
+    cursor = connection.cursor()
+    query = """
+        select NAME,sum("Open") as "Price", "Date" from
+        (
+            select A.FUNDID, NAME, Ticker, Username from
+            (select * from IndexFunds where FUNDID='{0}') A
+            join
+            (select * from IndexFundStocks) B
+            on A.FUNDID = B.FUNDID
+        ) X
+        join
+        (
+            select "Open", "Date", Ticker from StockInstances
+            where "Date" between '{1}' and '{2}'
+        ) Y
+        on X.TICKER = Y.TICKER
+        group by NAME, "Date"
+        ORDER BY "Date"
+    """.format(fundID, start_date, end_date)
 
-# getStocks()
-# getStockData('AAPL', '17-JAN-2019', '30-JAN-2019')
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            f"{row[0]}": row[1],
+            "Date": row[2].date(),
+        })
+    return data
