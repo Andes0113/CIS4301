@@ -1,7 +1,7 @@
 import oracledb
 import json
 
-pw = ''
+pw = 'AvMbhaON3ItAhMGfdGlAesTG'
 
 connection = oracledb.connect(
     user="af.rowe",
