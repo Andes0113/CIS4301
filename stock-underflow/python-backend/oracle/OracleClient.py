@@ -118,19 +118,21 @@ def getTwoStockData(ticker1, ticker2, start_date, end_date, indvar, dataType, mu
                 "date": row[2].date(),
             })
     return data
-def get_daily_volume_of_posts(ticker: str):
+def get_daily_volume_of_posts(ticker, start_date, end_date):
     cursor = connection.cursor()
     query = """
         SELECT COUNT(*), "DATE"
         FROM
         (
             select ticker,
-            CAST("TIMESTAMP" AS DATE) as "DATE"
+            TRUNC(CAST("TIMESTAMP" AS DATE)) as "DATE"
             from Posts
-            where ticker = '{}'
+            where ticker = '{0}' 
         )
         GROUP BY "DATE"
-    """.format(ticker)
+        HAVING "DATE" between '{1}' AND '{2}'
+        ORDER BY "DATE"
+    """.format(ticker, start_date, end_date)
     data = []
     for row in cursor.execute(query):
         data.append({
