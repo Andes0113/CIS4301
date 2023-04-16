@@ -192,13 +192,11 @@ def getPaperTradesByTicker(ticker, limit=100):
     data = []
     for row in cursor.execute(query):
         data.append({
-            "id": row[0],
-            "username": row[1],
-            "ticker": row[2],
-            "type": row[3],
-            "shares": row[4],
-            "price": row[5],
-            "timestamp": row[6].date(),
+            "trade_id": row[0],
+            "sell_date": row[1].date(),
+            "purchase_date": row[2].date(),
+            "username": row[3],
+            "ticker": row[4],
         })
     return data
 def getPaperTradesByUsername(username, limit=100):
@@ -213,13 +211,11 @@ def getPaperTradesByUsername(username, limit=100):
     data = []
     for row in cursor.execute(query):
         data.append({
-            "id": row[0],
-            "username": row[1],
-            "ticker": row[2],
-            "type": row[3],
-            "shares": row[4],
-            "price": row[5],
-            "timestamp": row[6].date(),
+            "trade_id": row[0],
+            "sell_date": row[1].date(),
+            "purchase_date": row[2].date(),
+            "username": row[3],
+            "ticker": row[4],
         })
     return data
 def getIndexFundsByUsername(username, limit=100):
@@ -234,11 +230,9 @@ def getIndexFundsByUsername(username, limit=100):
     data = []
     for row in cursor.execute(query):
         data.append({
-            "id": row[0],
-            "username": row[1],
-            "ticker": row[2],
-            "shares": row[3],
-            "timestamp": row[4].date(),
+            "fund_id": row[0],
+            "name": row[1],
+            "username": row[2],
         })
     return data
 def getIndexFundsByTicker(ticker, limit=100):
@@ -253,11 +247,9 @@ def getIndexFundsByTicker(ticker, limit=100):
     data = []
     for row in cursor.execute(query):
         data.append({
-            "id": row[0],
-            "username": row[1],
-            "ticker": row[2],
-            "shares": row[3],
-            "timestamp": row[4].date(),
+            "fund_id": row[0],
+            "name": row[1],
+            "username": row[2],
         })
     return data
 
