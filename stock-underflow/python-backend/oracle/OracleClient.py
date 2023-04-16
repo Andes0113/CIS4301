@@ -118,21 +118,19 @@ def getTwoStockData(ticker1, ticker2, start_date, end_date, indvar, dataType, mu
                 "date": row[2].date(),
             })
     return data
-def get_daily_volume_of_posts(ticker, start_date, end_date):
+def get_daily_volume_of_posts(ticker: str):
     cursor = connection.cursor()
     query = """
         SELECT COUNT(*), "DATE"
         FROM
         (
             select ticker,
-            TRUNC(CAST("TIMESTAMP" AS DATE)) as "DATE"
+            CAST("TIMESTAMP" AS DATE) as "DATE"
             from Posts
-            where ticker = '{0}' 
+            where ticker = '{}'
         )
         GROUP BY "DATE"
-        HAVING "DATE" between '{1}' AND '{2}'
-        ORDER BY "DATE"
-    """.format(ticker, start_date, end_date)
+    """.format(ticker)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -185,9 +183,10 @@ def getPostsByTicker(ticker, limit = 100):
 def getPaperTradesByTicker(ticker, limit=100):
     cursor = connection.cursor()
     query = """
-        SELECT PaperTradeID, Username, Ticker, Type, Shares, Price, TIMESTAMP FROM PaperTrades
+        SELECT TradeID, SellDate, PurchaseDate, Username, Ticker
+        FROM PaperTrades
         WHERE Ticker = '{0}' and rownum <= {1}
-        ORDER BY "TIMESTAMP" desc
+        ORDER BY "PurchaseDate" desc
     """.format(ticker, limit)
 
     data = []
@@ -205,9 +204,10 @@ def getPaperTradesByTicker(ticker, limit=100):
 def getPaperTradesByUsername(username, limit=100):
     cursor = connection.cursor()
     query = """
-        SELECT PaperTradeID, Username, Ticker, Type, Shares, Price, TIMESTAMP FROM PaperTrades
+        SELECT TradeID, SellDate, PurchaseDate, Username, Ticker
+        FROM PaperTrades
         WHERE Username = '{0}' and rownum <= {1}
-        ORDER BY "TIMESTAMP" desc
+        ORDER BY "PurchaseDate" desc
     """.format(username, limit)
 
     data = []
@@ -225,9 +225,10 @@ def getPaperTradesByUsername(username, limit=100):
 def getIndexFundsByUsername(username, limit=100):
     cursor = connection.cursor()
     query = """
-        SELECT IndexFundID, Username, Ticker, Shares, TIMESTAMP FROM IndexFunds
+        SELECT FundID, Name, Username
+        FROM IndexFunds
         WHERE Username = '{0}' and rownum <= {1}
-        ORDER BY "TIMESTAMP" desc
+        ORDER BY "Name" asc
     """.format(username, limit)
 
     data = []
@@ -243,9 +244,10 @@ def getIndexFundsByUsername(username, limit=100):
 def getIndexFundsByTicker(ticker, limit=100):
     cursor = connection.cursor()
     query = """
-        SELECT IndexFundID, Username, Ticker, Shares, TIMESTAMP FROM IndexFunds
+        SELECT FundID, Name, Username
+        FROM IndexFunds
         WHERE Ticker = '{0}' and rownum <= {1}
-        ORDER BY "TIMESTAMP" desc
+        ORDER BY "Name" asc
     """.format(ticker, limit)
 
     data = []
