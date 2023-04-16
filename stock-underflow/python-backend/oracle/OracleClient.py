@@ -180,5 +180,101 @@ def getPostsByTicker(ticker, limit = 100):
             "Content": row[5],
         })
     return data
+def getPostsByUsername(username, limit=100):
+    cursor = connection.cursor()
+    query = """
+        SELECT PostID, Ticker, TIMESTAMP, Username, Title, Content FROM Posts
+        WHERE Username = '{0}' and rownum <= {1}
+        ORDER BY "TIMESTAMP" desc
+    """.format(username, limit)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "ticker": row[1],
+            "timestamp": row[2].date(),
+            "username": row[3],
+            "title": row[4],
+            "Content": row[5],
+        })
+    return data
+def getPaperTradesByTicker(ticker, limit=100):
+    cursor = connection.cursor()
+    query = """
+        SELECT PaperTradeID, Username, Ticker, Type, Shares, Price, TIMESTAMP FROM PaperTrades
+        WHERE Ticker = '{0}' and rownum <= {1}
+        ORDER BY "TIMESTAMP" desc
+    """.format(ticker, limit)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "username": row[1],
+            "ticker": row[2],
+            "type": row[3],
+            "shares": row[4],
+            "price": row[5],
+            "timestamp": row[6].date(),
+        })
+    return data
+def getPaperTradesByUsername(username, limit=100):
+    cursor = connection.cursor()
+    query = """
+        SELECT PaperTradeID, Username, Ticker, Type, Shares, Price, TIMESTAMP FROM PaperTrades
+        WHERE Username = '{0}' and rownum <= {1}
+        ORDER BY "TIMESTAMP" desc
+    """.format(username, limit)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "username": row[1],
+            "ticker": row[2],
+            "type": row[3],
+            "shares": row[4],
+            "price": row[5],
+            "timestamp": row[6].date(),
+        })
+    return data
+def getIndexFundsByUsername(username, limit=100):
+    cursor = connection.cursor()
+    query = """
+        SELECT IndexFundID, Username, Ticker, Shares, TIMESTAMP FROM IndexFunds
+        WHERE Username = '{0}' and rownum <= {1}
+        ORDER BY "TIMESTAMP" desc
+    """.format(username, limit)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "username": row[1],
+            "ticker": row[2],
+            "shares": row[3],
+            "timestamp": row[4].date(),
+        })
+    return data
+def getIndexFundsByTicker(ticker, limit=100):
+    cursor = connection.cursor()
+    query = """
+        SELECT IndexFundID, Username, Ticker, Shares, TIMESTAMP FROM IndexFunds
+        WHERE Ticker = '{0}' and rownum <= {1}
+        ORDER BY "TIMESTAMP" desc
+    """.format(ticker, limit)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "username": row[1],
+            "ticker": row[2],
+            "shares": row[3],
+            "timestamp": row[4].date(),
+        })
+    return data
+
 # getStocks()
 # getStockData('AAPL', '17-JAN-2019', '30-JAN-2019')
