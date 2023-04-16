@@ -180,25 +180,6 @@ def getPostsByTicker(ticker, limit = 100):
             "Content": row[5],
         })
     return data
-def getPostsByUsername(username, limit=100):
-    cursor = connection.cursor()
-    query = """
-        SELECT PostID, Ticker, TIMESTAMP, Username, Title, Content FROM Posts
-        WHERE Username = '{0}' and rownum <= {1}
-        ORDER BY "TIMESTAMP" desc
-    """.format(username, limit)
-
-    data = []
-    for row in cursor.execute(query):
-        data.append({
-            "id": row[0],
-            "ticker": row[1],
-            "timestamp": row[2].date(),
-            "username": row[3],
-            "title": row[4],
-            "Content": row[5],
-        })
-    return data
 def getPaperTradesByTicker(ticker, limit=100):
     cursor = connection.cursor()
     query = """
