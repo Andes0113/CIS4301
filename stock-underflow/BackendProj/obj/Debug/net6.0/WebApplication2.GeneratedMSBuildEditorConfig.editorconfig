@@ -1,0 +1,164 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = WebApplication2
+build_property.RootNamespace = WebApplication2
+build_property.ProjectDir = /Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = /Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj
+build_property._RazorSourceGeneratorDebug = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/HOME/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvSE9NRS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/HOME/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvSE9NRS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/INDEXFUNDS/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvSU5ERVhGVU5EUy9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/INDEXFUNDS/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvSU5ERVhGVU5EUy9EZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/INDEXFUNDS/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvSU5ERVhGVU5EUy9EZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/INDEXFUNDS/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvSU5ERVhGVU5EUy9FZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/INDEXFUNDS/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvSU5ERVhGVU5EUy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/PAPERTRADES/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUEFQRVJUUkFERVMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/PAPERTRADES/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUEFQRVJUUkFERVMvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/PAPERTRADES/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUEFQRVJUUkFERVMvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/PAPERTRADES/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUEFQRVJUUkFERVMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/PAPERTRADES/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUEFQRVJUUkFERVMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/POSTS/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUE9TVFMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/POSTS/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUE9TVFMvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/POSTS/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUE9TVFMvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/POSTS/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUE9TVFMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/POSTS/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvUE9TVFMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/SHARED/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU0hBUkVEL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/SHARED/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU0hBUkVEL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKINSTANCES/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tJTlNUQU5DRVMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKINSTANCES/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tJTlNUQU5DRVMvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKINSTANCES/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tJTlNUQU5DRVMvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKINSTANCES/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tJTlNUQU5DRVMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKINSTANCES/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tJTlNUQU5DRVMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKS/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tTL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKS/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tTL0RlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKS/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tTL0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKS/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tTL0VkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/STOCKS/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU1RPQ0tTL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/USERS/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvVVNFUlMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/USERS/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvVVNFUlMvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/USERS/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvVVNFUlMvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/USERS/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvVVNFUlMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/USERS/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvVVNFUlMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/Users/alex/Desktop/Classes/CIS4301/TeamProject/CIS4301/stock-underflow/BackendProj/VIEWS/SHARED/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = VklFV1MvU0hBUkVEL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-vyp160c36u
