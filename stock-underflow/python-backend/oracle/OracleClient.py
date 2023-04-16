@@ -22,14 +22,33 @@ def getStocks():
         })
     return data
 
-def getStockData(ticker, start_date, end_date, indvar):
+def getStockData(ticker, start_date, end_date, indvar, dataType):
     cursor = connection.cursor()
-    data = []
-    for row in cursor.execute("""
-        select Ticker, "{}" as "Price", "Date"
+    query = """
+        select Ticker, "{}", "Date"
         from StockInstances
         where Ticker = '{}' and "Date" between '{}' and '{}' ORDER BY "Date"
-        """.format(indvar, ticker, start_date, end_date)):
+        """.format(indvar, ticker, start_date, end_date)
+    if dataType == 'difference':
+        query = """
+            with CurrInstances as
+            (select * from StockInstances where Ticker = '{0}')
+            select Ticker, "{1}" - "YDay" as "Diff", "Date"
+            from CurrInstances, 
+            (select "{1}" as "YDay", "Date" + 1 as "Date2" from CurrInstances)
+            where "Date"="Date2" and "Date" between '{2}' and '{3}' ORDER BY "Date"
+            """.format(ticker, indvar, start_date, end_date)
+    elif dataType == 'percent_difference':
+        query = """
+            with CurrInstances as
+            (select * from StockInstances where Ticker = '{0}')
+            select Ticker, TRUNC(("{1}" - "YDay")/("YDay") * 100,2) as "Diff", "Date"
+            from CurrInstances, 
+            (select "{1}" as "YDay", "Date" + 1 as "Date2" from CurrInstances)
+            where "Date"="Date2" and "Date" between '{2}' and '{3}' ORDER BY "Date"
+        """.format(ticker, indvar, start_date, end_date)
+    data = []
+    for row in cursor.execute(query):
         data.append({
             f"{row[0]}": row[1],
             "date": row[2].date(),

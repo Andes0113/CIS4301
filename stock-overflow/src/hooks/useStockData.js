@@ -78,14 +78,16 @@ const useStockData = ({ ticker }) => {
     // console.log(tickers);
     let start_date = formatDate(startDate);
     let end_date = formatDate(endDate);
+    let params = {
+      ticker,
+      start_date,
+      end_date,
+      indvar,
+      dataType,
+    };
     axios
       .get('http://localhost:8000/stock_data', {
-        params: {
-          ticker,
-          start_date,
-          end_date,
-          indvar,
-        },
+        params,
       })
       .then((res) => {
         setData(res.data.data);

@@ -31,8 +31,7 @@ def get_stocks():
     return { "data": OracleClient.getStocks()}
 
 @app.get("/stock_data")
-def get_stock_data(ticker: str, start_date: str, end_date: str, indvar: str):
-    print(indvar)
+def get_stock_data(ticker: str, start_date: str, end_date: str, indvar: str, dataType: str):
     if indvar == 'Price':
         indvar = 'Open'
-    return { "data": OracleClient.getStockData(ticker, start_date, end_date, indvar)}
+    return { "data": OracleClient.getStockData(ticker, start_date, end_date, indvar, dataType)}

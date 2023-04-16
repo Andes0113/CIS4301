@@ -34,9 +34,9 @@ const pHolder = [
 const useFunds = ({ username, name }) => {
   const [funds, setFunds] = useState([]);
   const [loading, setLoading] = useState(true);
-  let body = {};
-  if (username) body.username = username;
-  if (name) body.name = name;
+  let params = {};
+  if (username) params.username = username;
+  if (name) params.name = name;
 
   useEffect(() => {
     setFunds(pHolder);
