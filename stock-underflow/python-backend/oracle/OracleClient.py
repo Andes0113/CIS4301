@@ -1,13 +1,14 @@
 import oracledb
 import json
 
-pw = ''
+pw = 'M9syc9FDkefhUcNOpyvgjMD9'
 
 connection = oracledb.connect(
     user="af.rowe",
     password=pw,
     dsn="oracle.cise.ufl.edu/orcl",
-    port=1521,)
+    port=1521,
+    )
 
 print("Successfully connected to Oracle Database")
 
@@ -117,7 +118,44 @@ def getTwoStockData(ticker1, ticker2, start_date, end_date, indvar, dataType, mu
                 "date": row[2].date(),
             })
     return data
+def get_daily_volume_of_posts(ticker: str):
+    cursor = connection.cursor()
+    query = """
+        SELECT COUNT(*), "Date"
+        FROM Posts
+        WHERE ticker = '{}'
+        GROUP BY "Date"
+        ORDER BY "Date"
+    """.format(ticker)
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "date": row[1].date(),
+            "volume": row[0],
+        })
+    return data
 
+def getPostsByTicker(ticker, limit):
+    limit = 100
+    cursor = connection.cursor()
+    query = """
+        SELECT P.ID, P.Ticker, P."Date", P.Content, S.Name
+        FROM Posts P
+        INNER JOIN Stocks S ON P.Ticker = S.Ticker
+        WHERE P.Ticker = '{0}'
+        ORDER BY P."Date" DESC
+        LIMIT {1}
+    """.format(ticker, limit)
 
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "ticker": row[1],
+            "post_date": row[2].date(),
+            "content": row[3],
+            "stock_name": row[4],
+        })
+    return data
 # getStocks()
 # getStockData('AAPL', '17-JAN-2019', '30-JAN-2019')

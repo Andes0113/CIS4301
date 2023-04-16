@@ -31,3 +31,7 @@ def get_stock_data(ticker: str, start_date: str, end_date: str, indvar: str, dat
     if multiSelectType != 'None':
         return {"data": OracleClient.getTwoStockData(ticker, ticker2, start_date, end_date, indvar, dataType, multiSelectType )}
     return { "data": OracleClient.getStockData(ticker, start_date, end_date, indvar, dataType)}
+
+@app.get("/volume_of_posts")
+def get_volume_of_posts(ticker: str):
+    return {"volume_of_posts": OracleClient.get_daily_volume_of_posts(ticker)}
