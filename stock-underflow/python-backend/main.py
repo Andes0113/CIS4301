@@ -34,4 +34,11 @@ def get_stock_data(ticker: str, start_date: str, end_date: str, indvar: str, dat
 
 @app.get("/volume_of_posts")
 def get_volume_of_posts(ticker: str):
-    return {"volume_of_posts": OracleClient.get_daily_volume_of_posts(ticker)}
+    return {"data": OracleClient.get_daily_volume_of_posts(ticker)}
+
+@app.get("/posts")
+def get_posts(ticker: str, username: str):
+    if username != 'null':
+        return {"data": OracleClient.getPostsByUsername(username)}
+    else:  
+        return {"data": OracleClient.getPostsByTicker(ticker)}

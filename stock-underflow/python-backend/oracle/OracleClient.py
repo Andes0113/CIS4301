@@ -1,7 +1,7 @@
 import oracledb
 import json
 
-pw = 'M9syc9FDkefhUcNOpyvgjMD9'
+pw = ''
 
 connection = oracledb.connect(
     user="af.rowe",
@@ -121,11 +121,15 @@ def getTwoStockData(ticker1, ticker2, start_date, end_date, indvar, dataType, mu
 def get_daily_volume_of_posts(ticker: str):
     cursor = connection.cursor()
     query = """
-        SELECT COUNT(*), "Date"
-        FROM Posts
-        WHERE ticker = '{}'
-        GROUP BY "Date"
-        ORDER BY "Date"
+        SELECT COUNT(*), "DATE"
+        FROM
+        (
+            select ticker,
+            CAST("TIMESTAMP" AS DATE) as "DATE"
+            from Posts
+            where ticker = '{}'
+        )
+        GROUP BY "DATE"
     """.format(ticker)
     data = []
     for row in cursor.execute(query):
@@ -135,16 +139,34 @@ def get_daily_volume_of_posts(ticker: str):
         })
     return data
 
-def getPostsByTicker(ticker, limit):
+def getPostsByUsername(username, limit = 100):
     limit = 100
     cursor = connection.cursor()
     query = """
-        SELECT P.ID, P.Ticker, P."Date", P.Content, S.Name
-        FROM Posts P
-        INNER JOIN Stocks S ON P.Ticker = S.Ticker
-        WHERE P.Ticker = '{0}'
-        ORDER BY P."Date" DESC
-        LIMIT {1}
+        SELECT PostID, Ticker, TIMESTAMP, Username, Title, Content FROM Posts
+        WHERE Username = '{0}' and rownum between 0 and {1}
+        ORDER BY "TIMESTAMP" desc
+    """.format(username, limit)
+
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "id": row[0],
+            "ticker": row[1],
+            "timestamp": row[2].date(),
+            "username": row[3],
+            "title": row[4],
+            "Content": row[5],
+        })
+    return data
+
+def getPostsByTicker(ticker, limit = 100):
+    limit = 100
+    cursor = connection.cursor()
+    query = """
+        SELECT PostID, Ticker, TIMESTAMP, Username, Title, Content FROM Posts
+        WHERE Ticker = '{0}' and rownum between 0 and {1}
+        ORDER BY "TIMESTAMP" desc
     """.format(ticker, limit)
 
     data = []
@@ -152,9 +174,10 @@ def getPostsByTicker(ticker, limit):
         data.append({
             "id": row[0],
             "ticker": row[1],
-            "post_date": row[2].date(),
-            "content": row[3],
-            "stock_name": row[4],
+            "timestamp": row[2].date(),
+            "username": row[3],
+            "title": row[4],
+            "Content": row[5],
         })
     return data
 # getStocks()
