@@ -13,7 +13,7 @@ import { useSettingsContext } from '../../../../Contexts/SettingsContext';
 const colors = ['#3498DB', '#B03A2E', '#28B463', '#28B463', '#F1C40F'];
 
 function Chart({ data, selected }) {
-  const { multiSelectType } = useSettingsContext();
+  const { multiSelectType, indvar } = useSettingsContext();
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
@@ -43,7 +43,7 @@ function Chart({ data, selected }) {
               <Line
                 key={idx}
                 type="monotone"
-                dataKey={c.ticker}
+                dataKey={indvar !== 'Posts' ? c.ticker : 'volume'}
                 stroke={colors[idx]}
                 dot={false}
               />

@@ -27,6 +27,7 @@ function ControlPanel() {
           type="checkbox"
           value={multiSelect}
           onChange={() => setMultiSelect(!multiSelect)}
+          disabled={indvar === 'Posts'}
         />
         {multiSelect && (
           <div id="multiselect-options">
@@ -35,6 +36,7 @@ function ControlPanel() {
                 id="multiselect-display"
                 value={multiSelectType}
                 onChange={(e) => setMultiSelectType(e.target.value)}
+                disabled={indvar === 'Posts'}
               >
                 <option value="standard">Show Both</option>
                 <option value="difference">Show Diff</option>
@@ -53,6 +55,7 @@ function ControlPanel() {
         >
           <option value="Price">Price</option>
           <option value="Volume">Volume</option>
+          <option value="Posts">Posts</option>
         </select>
       </div>
       <div className="control-option">
@@ -62,6 +65,7 @@ function ControlPanel() {
           id="data-type"
           value={dataType}
           onChange={(e) => setDataType(e.target.value)}
+          disabled={indvar === 'Posts'}
         >
           <option value="plain">Plain</option>
           <option value="difference">Diff</option>

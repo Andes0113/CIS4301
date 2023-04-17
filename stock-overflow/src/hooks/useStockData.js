@@ -29,31 +29,46 @@ const useStockData = ({ ticker, ticker2 }) => {
   useEffect(() => {
     let start_date = formatDate(startDate);
     let end_date = formatDate(endDate);
-    let params = {
-      ticker,
-      start_date,
-      end_date,
-      indvar,
-      dataType,
-      multiSelect,
-    };
-    if (multiSelect && ticker2) {
-      params['multiSelectType'] = multiSelectType;
-      params['ticker2'] = ticker2;
+
+    if (indvar !== 'Posts') {
+      let params = {
+        ticker,
+        start_date,
+        end_date,
+        indvar,
+        dataType,
+        multiSelect,
+      };
+      if (multiSelect && ticker2) {
+        params['multiSelectType'] = multiSelectType;
+        params['ticker2'] = ticker2;
+      } else {
+        params['ticker2'] = null;
+        params['multiSelectType'] = 'None';
+        params['ticker2'] = '';
+      }
+      axios
+        .get('http://localhost:8000/stock_data', {
+          params,
+        })
+        .then((res) => {
+          setData(res.data.data);
+          setLoading(false);
+        });
     } else {
-      params['ticker2'] = null;
-      params['multiSelectType'] = 'None';
-      params['ticker2'] = '';
+      axios
+        .get('http://localhost:8000/volume_of_posts', {
+          params: {
+            ticker,
+            start_date,
+            end_date,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setData(res.data.data);
+        });
     }
-    axios
-      .get('http://localhost:8000/stock_data', {
-        params,
-      })
-      .then((res) => {
-        setData(res.data.data);
-      });
-    // setData(pHolder);
-    setLoading(false);
   }, [ticker, ticker2, dataType, indvar, multiSelectType, startDate, endDate]);
 
   return { data, loading };
