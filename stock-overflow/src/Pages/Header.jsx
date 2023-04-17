@@ -14,6 +14,9 @@ function Header() {
 
       {auth.user ? (
         <div>
+          <Link to="/leaderboard" id="profile-link">
+            Leaderboard
+          </Link>
           <Link to={`/user/${auth.user}/posts`} id="profile-link">
             Profile
           </Link>
@@ -23,9 +26,14 @@ function Header() {
           </button>
         </div>
       ) : (
-        <Link to="/login" id="header-login">
-          Login
-        </Link>
+        <>
+          <Link to="/leaderboard" id="profile-link">
+            Leaderboard
+          </Link>
+          <Link to="/login" id="header-login">
+            Login
+          </Link>
+        </>
       )}
     </div>
   );

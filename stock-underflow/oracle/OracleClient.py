@@ -256,7 +256,7 @@ def getPaperTradesByTicker(ticker):
 def getPaperTradesByUsername(username):
     cursor = connection.cursor()
     query = """
-        select TradeID, PURCHASEDATE, SELLDATE, USERNAME, A.TICKER,
+        select TradeID, TRUNC(SELLDATE) as SELLDATE, PURCHASEDATE, USERNAME, A.TICKER,
         TRUNC(("SellPrice" - "PurchasePrice")/"PurchasePrice" * 100, 2) as Percent_Profit from
         (
             select TradeID, SELLDATE, PURCHASEDATE, USERNAME, P.Ticker, "Open" as "PurchasePrice" from
@@ -413,7 +413,7 @@ def getTradeLeaderboard(start_date, end_date):
     query = """
         with Trades as 
         (
-            select TradeID, PURCHASEDATE, TRUNC(SELLDATE) AS SELLDATE, USERNAME, TICKER,
+            select TradeID, PURCHASEDATE, TRUNC(SELLDATE) AS SELLDATE, USERNAME, A.TICKER,
             TRUNC(("SellPrice" - "PurchasePrice")/"PurchasePrice" * 100, 2) as Percent_Profit from
             (
                 select TradeID, SELLDATE, PURCHASEDATE, USERNAME, P.Ticker, "Open" as "PurchasePrice" from
@@ -423,8 +423,8 @@ def getTradeLeaderboard(start_date, end_date):
                 on TRUNC(P.PURCHASEDATE) = TRUNC(S."Date") and P.Ticker = S.Ticker
             ) A
             join 
-            (select "Date", "Open" as "SellPrice" from StockInstances where Ticker='AAPL') B
-            on TRUNC(A.SELLDATE) = TRUNC(B."Date")
+            (select "Date", "Open" as "SellPrice", TICKER from StockInstances) B
+            on TRUNC(A.SELLDATE) = TRUNC(B."Date") AND A.TICKER = B.TICKER
             where SELLDATE between '{0}' and '{1}' and PURCHASEDATE < SELLDATE
         )
         select TRADEID, X.SELLDATE, PURCHASEDATE, USERNAME, TICKER, PERCENT_PROFIT from 
