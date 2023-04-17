@@ -49,6 +49,7 @@ def getStockData(ticker, start_date, end_date, indvar, dataType):
             (select "{1}" as "YDay", "Date" + 1 as "Date2" from CurrInstances)
             where "Date"="Date2" and "Date" between '{2}' and '{3}' ORDER BY "Date"
         """.format(ticker, indvar, start_date, end_date)
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -104,7 +105,7 @@ def getTwoStockData(ticker1, ticker2, start_date, end_date, indvar, dataType, mu
         on A."Date" = B."Date" and A."Date" between '{0}' and '{1}'
         ORDER BY "Date"
     """.format(start_date, end_date)
-
+    print(query)
     data = []
     for row in cursor.execute(query):
         if multiSelectType == "difference":
@@ -168,6 +169,7 @@ def get_daily_volume_of_posts(ticker: str, start_date: str, end_date: str, dataT
             on A."DATE" = B.YDAY
             ORDER BY "DATE"
         """.format(ticker, start_date, end_date)
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -185,6 +187,7 @@ def getPostsByUsername(username, limit = 100):
         ORDER BY "TIMESTAMP" desc
     """.format(username, limit)
 
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -207,6 +210,7 @@ def getPostsByTicker(ticker, limit = 100):
         ) where rownum between 0 and {1}
     """.format(ticker, limit)
 
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -237,6 +241,7 @@ def getPaperTradesByTicker(ticker):
         ORDER BY PERCENT_PROFIT desc
     """.format(ticker)
 
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -266,6 +271,7 @@ def getPaperTradesByUsername(username):
         ORDER BY PERCENT_PROFIT desc
     """.format(username)
 
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -284,6 +290,7 @@ def getIndexFundsByUsername(username):
         where Username='{0}'
     """.format(username)
 
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -306,6 +313,7 @@ def getIndexFundStocks(fundID):
         join Stocks on X.Ticker = Stocks.Ticker
     """.format(fundID)
 
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -334,6 +342,7 @@ def getIndexFundStockData(fundID, start_date, end_date):
         ORDER BY "Date"
     """.format(fundID, start_date, end_date)
 
+    print(query)
     data = []
     for row in cursor.execute(query):
         data.append({
@@ -348,6 +357,7 @@ def login(username, password):
         select * from Users
         where Username='{0}' and password='{1}'
     """.format(username, password)
+    print(query)
     success = False
     for _ in cursor.execute(query):
         success = True
@@ -360,6 +370,7 @@ def createPost(post):
     query ="""
     insert into Posts values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')
     """.format(postid, post.title, post.content, ts, post.username, post.ticker)
+    print(query)
     cursor.execute(query)
     connection.commit()
     return True
