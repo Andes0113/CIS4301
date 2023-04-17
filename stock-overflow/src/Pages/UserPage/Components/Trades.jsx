@@ -15,6 +15,9 @@ function Trades() {
       {trades.map((trade, idx) => (
         <div className="user-content-div" key={idx}>
           <div className="trade-display">
+            <Link to={`/user/${trade.username}/posts`}>
+              User: {trade.username}
+            </Link>
             <div>Ticker: {trade.ticker}</div>
             <div>Purchase Date: {trade.purchase_date}</div>
             <div>Sell Date: {trade.sell_date}</div>

@@ -407,3 +407,48 @@ def createTrade(trade):
     """.format(tradeid, SellDate, PurchaseDate, username, ticker))
     connection.commit()
     return True
+
+def getTradeLeaderboard(start_date, end_date):
+    cursor = connection.cursor()
+    query = """
+        with Trades as 
+        (
+            select TradeID, PURCHASEDATE, TRUNC(SELLDATE) AS SELLDATE, USERNAME, TICKER,
+            TRUNC(("SellPrice" - "PurchasePrice")/"PurchasePrice" * 100, 2) as Percent_Profit from
+            (
+                select TradeID, SELLDATE, PURCHASEDATE, USERNAME, P.Ticker, "Open" as "PurchasePrice" from
+                (select * from PaperTrades) P
+                join
+                (select * from StockInstances) S
+                on TRUNC(P.PURCHASEDATE) = TRUNC(S."Date") and P.Ticker = S.Ticker
+            ) A
+            join 
+            (select "Date", "Open" as "SellPrice" from StockInstances where Ticker='AAPL') B
+            on TRUNC(A.SELLDATE) = TRUNC(B."Date")
+            where SELLDATE between '{0}' and '{1}' and PURCHASEDATE < SELLDATE
+        )
+        select TRADEID, X.SELLDATE, PURCHASEDATE, USERNAME, TICKER, PERCENT_PROFIT from 
+        Trades X
+        join
+        (
+        select SELLDATE, MAX(PERCENT_PROFIT) as MAX_PROFIT from
+        (
+            Trades
+        )
+        GROUP BY SELLDATE
+        ) Y
+        on X.SELLDATE = Y.SELLDATE AND X.PERCENT_PROFIT = Y.MAX_PROFIT
+        ORDER BY X.SELLDATE desc
+    """.format(start_date, end_date)
+    print(query)
+    data = []
+    for row in cursor.execute(query):
+        data.append({
+            "trade_id": row[0],
+            "sell_date": row[1].date(),
+            "purchase_date": row[2].date(),
+            "username": row[3],
+            "ticker": row[4],
+            "percent_profit": row[5]
+        })
+    return data

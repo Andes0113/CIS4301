@@ -94,3 +94,7 @@ def create_fund(fund: Fund):
 @app.post("/trades")
 def create_trade(trade: Trade):
     return {"success": OracleClient.createTrade(trade)}
+
+@app.get("/leaderboard")
+def get_leaderboard(start_date: str, end_date: str):
+    return {"data": OracleClient.getTradeLeaderboard(start_date, end_date)}

@@ -1,0 +1,19 @@
+#leaderboard-controls {
+  display: flex;
+  justify-content: center;
+}
+#leaderboard-controls * {
+  padding: 0.25rem;
+}
+#leaderboard-content-div {
+  display: flex;
+  flex-direction: row;
+}
+.leaderboard-trade-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  border: 1px solid black;
+}
+.leaderboard-trade-display * {
+  padding-left: 1rem;
+}

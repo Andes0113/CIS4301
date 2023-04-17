@@ -20,6 +20,7 @@ import FundPage from './Pages/FundPage/FundPage';
 import { SettingsContextProvider } from './Contexts/SettingsContext';
 import CreateFund from './Pages/CreateFund/CreateFund';
 import CreateTrade from './Pages/CreateTrade/CreateTrade';
+import Leaderboard from './Pages/Leaderboard/Leaderboard';
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
   {
     path: '/create/trade',
     element: <CreateTrade />,
+  },
+  {
+    path: '/leaderboard',
+    element: <Leaderboard />,
   },
 ]);
 
