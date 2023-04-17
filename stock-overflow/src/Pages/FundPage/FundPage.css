@@ -1,0 +1,23 @@
+#fund-chart {
+  width: 1200px;
+  height: 600px;
+  display: flex;
+}
+
+#fund-control-panel {
+  word-wrap: normal;
+}
+
+#fund-stocks {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.fund-stock {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}

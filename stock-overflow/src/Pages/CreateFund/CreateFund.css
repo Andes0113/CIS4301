@@ -1,0 +1,23 @@
+#fund-select-from {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+#create-fund-form {
+  display: flex;
+  justify-content: space-evenly;
+}
+#fund-selected-all {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+}
+
+#create-form-button {
+  height: 30px;
+}
+
+#create-fund-name {
+  height: 30px;
+}

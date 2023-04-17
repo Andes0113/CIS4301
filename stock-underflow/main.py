@@ -1,9 +1,27 @@
-from typing import Union
+from typing import List
 from pydantic import BaseModel
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 from oracle import OracleClient
+
+class Post(BaseModel):
+    title: str
+    content: str
+    ticker: str
+    username: str
+
+class Fund(BaseModel):
+    name: str
+    username: str
+    stocks: List[str] = []
+
+class Trade(BaseModel):
+    username: str
+    ticker: str
+    purchase_date: str
+    sell_date: str
 
 
 app = FastAPI()
@@ -60,3 +78,19 @@ def get_fund_stocks(id: str):
 @app.get("/fund-data")
 def get_fund_data(id: str, start_date: str, end_date: str):
     return {"data": OracleClient.getIndexFundStockData(id, start_date, end_date) }
+
+@app.get("/login")
+def login(username: str, password: str):
+    return {"success": OracleClient.login(username, password) }
+
+@app.post("/posts")
+def create_post(post: Post):
+    return { "success": OracleClient.createPost(post) }
+
+@app.post("/funds")
+def create_fund(fund: Fund):
+    return { "success": OracleClient.createIndexFund(fund) }
+
+@app.post("/trades")
+def create_trade(trade: Trade):
+    return {"success": OracleClient.createTrade(trade)}

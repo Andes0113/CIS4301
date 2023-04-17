@@ -25,12 +25,8 @@ const useStockData = ({ ticker, ticker2 }) => {
   const [loading, setLoading] = useState(true);
   const { dataType, indvar, multiSelect, multiSelectType, startDate, endDate } =
     useSettingsContext();
-  // if (tickers) body.tickers = tickers;
-  // if (multiSelect) body.multiSelectType = multiSelectType;
-  console.log(ticker2);
 
   useEffect(() => {
-    // console.log(tickers);
     let start_date = formatDate(startDate);
     let end_date = formatDate(endDate);
     let params = {
@@ -54,7 +50,6 @@ const useStockData = ({ ticker, ticker2 }) => {
         params,
       })
       .then((res) => {
-        console.log(res.data.data);
         setData(res.data.data);
       });
     // setData(pHolder);

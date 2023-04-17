@@ -3,14 +3,23 @@ import './LoginPage.css';
 import Header from '../header';
 import { useAuthContext } from '../../Contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
-
+import axios from 'axios';
 function LoginPage() {
   const auth = useAuthContext();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [send, setSend] = useState(false);
+  // const { success, loading } = useLogin(username, password, send);
 
   const login = () => {
-    auth.setLocalUser(username);
+    setSend(true);
+    axios
+      .get(
+        `http://localhost:8000/login?username=${username}&password=${password}`
+      )
+      .then((res) => {
+        if (res.data.success) auth.setLocalUser(username);
+      });
   };
 
   if (auth.user) {

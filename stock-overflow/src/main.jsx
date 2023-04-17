@@ -16,6 +16,10 @@ import Trades from './Pages/UserPage/Components/Trades';
 import IndexFunds from './Pages/UserPage/Components/IndexFunds';
 import { AuthContextProvider } from './Contexts/AuthContext';
 import LoginPage from './Pages/LoginPage/LoginPage';
+import FundPage from './Pages/FundPage/FundPage';
+import { SettingsContextProvider } from './Contexts/SettingsContext';
+import CreateFund from './Pages/CreateFund/CreateFund';
+import CreateTrade from './Pages/CreateTrade/CreateTrade';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +47,22 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />,
+  },
+  {
+    path: '/fund/:fund_id',
+    element: (
+      <SettingsContextProvider>
+        <FundPage />
+      </SettingsContextProvider>
+    ),
+  },
+  {
+    path: '/create/fund',
+    element: <CreateFund />,
+  },
+  {
+    path: '/create/trade',
+    element: <CreateTrade />,
   },
 ]);
 

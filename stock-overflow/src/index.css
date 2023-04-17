@@ -55,3 +55,16 @@
   align-items: center;
   justify-content: center;
 }
+
+#profile-link {
+  margin-right: 2rem;
+  text-decoration: none;
+}
+
+#create-fund-nav {
+  margin-left: 1rem;
+  padding: 1rem;
+  border: 1px solid black;
+  display: inline-table;
+  border-radius: 5%;
+}

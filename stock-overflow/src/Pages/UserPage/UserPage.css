@@ -30,3 +30,20 @@
   display: flex;
   justify-content: center;
 }
+
+.user-content-div {
+  width: 100%;
+}
+.trade-display {
+  border: 1px solid lightgray;
+  padding: 1rem;
+}
+
+.trade-display * {
+  padding: 0.25rem;
+}
+
+.fund-link {
+  padding: 1rem;
+  font-size: 2rem;
+}

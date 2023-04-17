@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const pHolder = [
   {
@@ -34,13 +35,14 @@ const pHolder = [
 const useTrades = ({ username, ticker }) => {
   const [trades, setTrades] = useState([]);
   const [loading, setLoading] = useState(true);
-  let body = {};
-  if (username) body.username = username;
-  if (ticker) body.ticker = ticker;
 
   useEffect(() => {
-    setTrades(pHolder);
-    setLoading(false);
+    axios
+      .get(`http://localhost:8000/trades?username=${username}&ticker=${ticker}`)
+      .then((res) => {
+        setTrades(res.data.data);
+        setLoading(false);
+      });
   }, [username, ticker]);
 
   return { trades, loading };

@@ -1,7 +1,8 @@
 import oracledb
-import json
+import uuid
+import datetime
 
-pw = 'M9syc9FDkefhUcNOpyvgjMD9'
+pw = ''
 
 connection = oracledb.connect(
     user="af.rowe",
@@ -158,17 +159,18 @@ def getPostsByUsername(username, limit = 100):
             "timestamp": row[2].date(),
             "username": row[3],
             "title": row[4],
-            "Content": row[5],
+            "content": row[5],
         })
     return data
 
 def getPostsByTicker(ticker, limit = 100):
-    limit = 100
     cursor = connection.cursor()
     query = """
-        SELECT PostID, Ticker, TIMESTAMP, Username, Title, Content FROM Posts
-        WHERE Ticker = '{0}' and rownum between 0 and {1}
-        ORDER BY "TIMESTAMP" desc
+        select * from(
+            SELECT PostID, Ticker, TIMESTAMP, Username, Title, Content FROM Posts
+            WHERE Ticker = '{0}'
+            ORDER BY "TIMESTAMP" desc
+        ) where rownum between 0 and {1}
     """.format(ticker, limit)
 
     data = []
@@ -179,7 +181,7 @@ def getPostsByTicker(ticker, limit = 100):
             "timestamp": row[2].date(),
             "username": row[3],
             "title": row[4],
-            "Content": row[5],
+            "content": row[5],
         })
     return data
 
@@ -302,6 +304,61 @@ def getIndexFundStockData(fundID, start_date, end_date):
     for row in cursor.execute(query):
         data.append({
             f"{row[0]}": row[1],
-            "Date": row[2].date(),
+            "date": row[2].date(),
         })
     return data
+
+def login(username, password):
+    cursor = connection.cursor()
+    query = """
+        select * from Users
+        where Username='{0}' and password='{1}'
+    """.format(username, password)
+    success = False
+    for _ in cursor.execute(query):
+        success = True
+    return success
+
+def createPost(post):
+    cursor = connection.cursor()
+    postid = uuid.uuid4()
+    ts = datetime.datetime.now().strftime('%d-%b-%y %I:%M:%S %p')
+    query ="""
+    insert into Posts values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')
+    """.format(postid, post.title, post.content, ts, post.username, post.ticker)
+    cursor.execute(query)
+    connection.commit()
+    return True
+
+def createIndexFund(fund):
+    cursor = connection.cursor()
+    fundid = uuid.uuid4()
+    name = fund.name
+    username = fund.username
+    cursor.execute("""
+        insert into IndexFunds
+        values('{0}', '{1}', '{2}')
+    """.format(fundid, name, username))
+
+    tickers = fund.stocks
+    for ticker in tickers:
+        cursor.execute("""
+            insert into IndexFundStocks
+            values('{0}', '{1}')
+        """.format(fundid, ticker))
+    connection.commit()
+    return True
+
+def createTrade(trade):
+    cursor = connection.cursor()
+    tradeid = uuid.uuid4()
+    username = trade.username
+    ticker = trade.ticker
+    SellDate = trade.sell_date
+    PurchaseDate = trade.purchase_date
+    cursor.execute("""
+        insert into PaperTrades
+        values('{0}', '{1}', '{2}', '{3}', '{4}')
+    """.format(tradeid, SellDate, PurchaseDate, username, ticker))
+    connection.commit()
+    return True

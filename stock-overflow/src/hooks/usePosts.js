@@ -1,46 +1,20 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const pHolder = [
-  {
-    id: 1,
-    user: 'Alex',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vel risus commodo viverra maecenas accumsan lacus vel. Sit amet consectetur adipiscing elit duis tristique. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing.',
-    ticker: 'AAPL',
-  },
-  {
-    id: 2,
-    user: 'Alex',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vel risus commodo viverra maecenas accumsan lacus vel. Sit amet consectetur adipiscing elit duis tristique. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing.',
-    ticker: 'AAPL',
-  },
-  {
-    id: 3,
-    user: 'Alex',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vel risus commodo viverra maecenas accumsan lacus vel. Sit amet consectetur adipiscing elit duis tristique. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing.',
-    ticker: 'AAPL',
-  },
-  {
-    id: 4,
-    user: 'Alex',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vel risus commodo viverra maecenas accumsan lacus vel. Sit amet consectetur adipiscing elit duis tristique. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing.',
-    ticker: 'AAPL',
-  },
-];
-
-const usePosts = ({ username, ticker }) => {
+const usePosts = ({ ticker, username }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  let body = {};
-  if (username) body.username = username;
-  if (ticker) body.ticker = ticker;
+  let params = {};
+  if (username) params.username = username;
+  if (ticker) params.ticker = ticker;
 
   useEffect(() => {
-    setPosts(pHolder);
-    setLoading(false);
+    axios
+      .get(`http://localhost:8000/posts?ticker=${ticker}&username=${username}`)
+      .then((res) => {
+        setPosts(res.data.data);
+        setLoading(false);
+      });
   }, [username, ticker]);
 
   return { posts, loading };

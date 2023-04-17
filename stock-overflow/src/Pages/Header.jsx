@@ -11,10 +11,17 @@ function Header() {
       <Link to="/" id="logo">
         Stock Overflow
       </Link>
+
       {auth.user ? (
-        <button id="header-login" onClick={signOut}>
-          Sign Out
-        </button>
+        <div>
+          <Link to={`/user/${auth.user}/posts`} id="profile-link">
+            Profile
+          </Link>
+
+          <button id="header-login" onClick={signOut}>
+            Sign Out
+          </button>
+        </div>
       ) : (
         <Link to="/login" id="header-login">
           Login

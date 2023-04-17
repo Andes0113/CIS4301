@@ -5,10 +5,9 @@ import usePosts from '../../../hooks/usePosts';
 
 function Posts() {
   let { username } = useParams();
-  const { posts, loading } = usePosts({ username });
+  const { posts, loading } = usePosts({ ticker: 'null', username });
   return (
-    <div>
-      {username} Posts
+    <div className="user-content-div">
       {!loading &&
         posts.map((post) => (
           <Fragment key={post.id}>
