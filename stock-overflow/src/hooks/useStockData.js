@@ -62,6 +62,7 @@ const useStockData = ({ ticker, ticker2 }) => {
             ticker,
             start_date,
             end_date,
+            dataType,
           },
         })
         .then((res) => {

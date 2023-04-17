@@ -4,9 +4,6 @@ import axios from 'axios';
 const usePosts = ({ ticker, username }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  let params = {};
-  if (username) params.username = username;
-  if (ticker) params.ticker = ticker;
 
   useEffect(() => {
     axios

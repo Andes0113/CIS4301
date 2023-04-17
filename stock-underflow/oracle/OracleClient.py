@@ -119,7 +119,7 @@ def getTwoStockData(ticker1, ticker2, start_date, end_date, indvar, dataType, mu
                 "date": row[2].date(),
             })
     return data
-def get_daily_volume_of_posts(ticker: str, start_date: str, end_date: str):
+def get_daily_volume_of_posts(ticker: str, start_date: str, end_date: str, dataType):
     cursor = connection.cursor()
     query = """
         SELECT COUNT(*), "DATE"
@@ -134,6 +134,40 @@ def get_daily_volume_of_posts(ticker: str, start_date: str, end_date: str):
         HAVING "DATE" between '{1}' AND '{2}'
         ORDER BY "DATE"
     """.format(ticker, start_date, end_date)
+    if dataType == "difference" or dataType == "percent_difference":
+        if dataType == "difference":
+            query = """select TRUNC((A.POST_VOLUME - B.POST_VOLUME)/B.POST_VOLUME * 100, 2) as "Posts", "DATE" FROM"""
+        else:
+            query = """select (A.POST_VOLUME - B.POST_VOLUME) as "Posts", "DATE" FROM"""
+        query += """
+            (
+                SELECT COUNT(*) as POST_VOLUME, "DATE"
+                FROM
+                (
+                    select ticker,
+                    TRUNC(CAST("TIMESTAMP" AS DATE)) as "DATE"
+                    from Posts
+                    where ticker = '{0}' 
+                )
+                GROUP BY "DATE"
+                HAVING "DATE" between '{1}' AND '{2}'
+            ) A
+            join
+            (
+                SELECT COUNT(*) as POST_VOLUME, "DATE" + 1 as YDAY
+                FROM
+                (
+                    select ticker,
+                    TRUNC(CAST("TIMESTAMP" AS DATE)) as "DATE"
+                    from Posts
+                    where ticker = '{0}' 
+                )
+                GROUP BY "DATE"
+                HAVING "DATE" between '{1}' AND '{2}'
+            ) B
+            on A."DATE" = B.YDAY
+            ORDER BY "DATE"
+        """.format(ticker, start_date, end_date)
     data = []
     for row in cursor.execute(query):
         data.append({

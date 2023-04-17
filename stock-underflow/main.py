@@ -51,8 +51,8 @@ def get_stock_data(ticker: str, start_date: str, end_date: str, indvar: str, dat
     return { "data": OracleClient.getStockData(ticker, start_date, end_date, indvar, dataType)}
 
 @app.get("/volume_of_posts")
-def get_volume_of_posts(ticker: str, start_date: str, end_date: str):
-    return {"data": OracleClient.get_daily_volume_of_posts(ticker, start_date, end_date)}
+def get_volume_of_posts(ticker: str, start_date: str, end_date: str, dataType):
+    return {"data": OracleClient.get_daily_volume_of_posts(ticker, start_date, end_date, dataType)}
 
 @app.get("/posts")
 def get_posts(ticker: str, username: str):

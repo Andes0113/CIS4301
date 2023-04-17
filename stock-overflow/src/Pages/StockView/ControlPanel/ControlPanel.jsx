@@ -65,7 +65,6 @@ function ControlPanel() {
           id="data-type"
           value={dataType}
           onChange={(e) => setDataType(e.target.value)}
-          disabled={indvar === 'Posts'}
         >
           <option value="plain">Plain</option>
           <option value="difference">Diff</option>
